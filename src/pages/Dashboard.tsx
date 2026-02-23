@@ -1,9 +1,19 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useApp } from '@/context/AppContext';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Cell, LabelList } from 'recharts';
 import TransportBadge from '@/components/TransportBadge';
 import StatusBadge from '@/components/StatusBadge';
+
+const stagger = {
+  animate: { transition: { staggerChildren: 0.08 } },
+};
+
+const fadeUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+};
 
 export default function Dashboard() {
   const { orders, alertOrders, reminderDays, t, formatXOF, lang } = useApp();
@@ -35,36 +45,48 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-4 md:p-6 space-y-6 animate-fade-in">
+    <motion.div
+      className="p-4 md:p-6 space-y-6"
+      variants={stagger}
+      initial="initial"
+      animate="animate"
+    >
       {/* Alert banner */}
       {alertOrders.length > 0 && (
-        <Link to="/orders?status=arrive" className="block p-4 rounded-lg bg-gold/10 border border-gold/30">
-          <p className="font-heading font-bold text-gold">
-            🔔 {alertOrders.length} {t('reminder')} {reminderDays} {t('reminderSuffix')}
-          </p>
-        </Link>
+        <motion.div variants={fadeUp}>
+          <Link to="/orders?status=arrive" className="block p-4 rounded-lg bg-gold/10 border border-gold/30">
+            <p className="font-heading font-bold text-gold">
+              🔔 {alertOrders.length} {t('reminder')} {reminderDays} {t('reminderSuffix')}
+            </p>
+          </Link>
+        </motion.div>
       )}
 
       {/* Stat cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {stats.map(s => (
-          <div key={s.label} className={`bg-card rounded-lg p-4 border-l-4 ${s.color}`}>
+      <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4" variants={stagger}>
+        {stats.map((s, i) => (
+          <motion.div
+            key={s.label}
+            variants={fadeUp}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            className={`bg-card rounded-lg p-4 border-l-4 ${s.color}`}
+          >
             <p className="text-xs font-heading uppercase tracking-wider text-muted-foreground mb-1">{s.label}</p>
             <p className={`text-xl font-heading font-extrabold ${s.profit !== undefined ? (s.profit >= 0 ? 'text-profit-positive' : 'text-profit-negative') : ''}`}>
               {s.value}
             </p>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Chart */}
-      <div className="bg-card rounded-lg p-4">
+      <motion.div variants={fadeUp} className="bg-card rounded-lg p-4">
         <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-muted-foreground mb-4">{t('profitChart')}</h3>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={chartData}>
             <XAxis dataKey="month" tick={{ fill: 'hsl(200 20% 57%)', fontSize: 12, fontFamily: 'Syne' }} axisLine={false} tickLine={false} />
             <YAxis hide />
-            <Bar dataKey="profit" radius={[6, 6, 0, 0]}>
+            <Bar dataKey="profit" radius={[6, 6, 0, 0]} animationDuration={800} animationEasing="ease-out">
               {chartData.map((_, i) => (
                 <Cell key={i} fill="hsl(180 52% 35%)" />
               ))}
@@ -72,10 +94,10 @@ export default function Dashboard() {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </div>
+      </motion.div>
 
       {/* Recent orders */}
-      <div className="bg-card rounded-lg p-4">
+      <motion.div variants={fadeUp} className="bg-card rounded-lg p-4">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-muted-foreground">{t('recentOrders')}</h3>
           <Link to="/orders" className="text-teal text-sm font-heading font-semibold hover:underline">{t('orders')} →</Link>
@@ -95,7 +117,13 @@ export default function Dashboard() {
               </thead>
               <tbody>
                 {recent.map(o => (
-                  <tr key={o.id} className="border-b border-border/50 hover:bg-accent/50 transition-colors">
+                  <motion.tr
+                    key={o.id}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="border-b border-border/50 hover:bg-accent/50 transition-colors"
+                  >
                     <td className="py-2.5">
                       <Link to={`/orders/${o.id}`} className="text-foreground hover:text-teal font-medium">{o.client}</Link>
                     </td>
@@ -104,13 +132,13 @@ export default function Dashboard() {
                       {formatXOF(o.profit)}
                     </td>
                     <td className="py-2.5"><StatusBadge status={o.status} /></td>
-                  </tr>
+                  </motion.tr>
                 ))}
               </tbody>
             </table>
           </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
