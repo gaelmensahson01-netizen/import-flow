@@ -38,10 +38,10 @@ export default function Dashboard() {
   const recent = useMemo(() => [...orders].sort((a, b) => b.createdAt - a.createdAt).slice(0, 5), [orders]);
 
   const stats = [
-    { label: t('totalOrders'), value: String(orders.length), color: 'border-teal' },
-    { label: t('totalProfit'), value: formatXOF(totalProfit), color: 'border-success', profit: totalProfit },
-    { label: t('thisMonth'), value: formatXOF(monthProfit), color: 'border-gold', profit: monthProfit },
-    { label: t('toPickup'), value: String(toPickup), color: toPickup > 0 ? 'border-danger' : 'border-success' },
+    { label: t('totalOrders'), value: String(orders.length), accent: 'from-teal to-teal-light' },
+    { label: t('totalProfit'), value: formatXOF(totalProfit), accent: 'from-success to-teal', profit: totalProfit },
+    { label: t('thisMonth'), value: formatXOF(monthProfit), accent: 'from-gold to-gold', profit: monthProfit },
+    { label: t('toPickup'), value: String(toPickup), accent: toPickup > 0 ? 'from-danger to-danger' : 'from-success to-success' },
   ];
 
   return (
@@ -54,8 +54,8 @@ export default function Dashboard() {
       {/* Alert banner */}
       {alertOrders.length > 0 && (
         <motion.div variants={fadeUp}>
-          <Link to="/orders?status=arrive" className="block p-4 rounded-lg bg-gold/10 border border-gold/30">
-            <p className="font-heading font-bold text-gold">
+          <Link to="/orders?status=arrive" className="block p-4 rounded-xl glass border-gold/20 hover:border-gold/40 transition-colors">
+            <p className="font-heading font-semibold text-gold">
               🔔 {alertOrders.length} {t('reminder')} {reminderDays} {t('reminderSuffix')}
             </p>
           </Link>
@@ -64,15 +64,16 @@ export default function Dashboard() {
 
       {/* Stat cards */}
       <motion.div className="grid grid-cols-2 lg:grid-cols-4 gap-4" variants={stagger}>
-        {stats.map((s, i) => (
+        {stats.map((s) => (
           <motion.div
             key={s.label}
             variants={fadeUp}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            className={`bg-card rounded-lg p-4 border-l-4 ${s.color}`}
+            className="relative overflow-hidden rounded-xl glass p-4"
           >
-            <p className="text-xs font-heading uppercase tracking-wider text-muted-foreground mb-1">{s.label}</p>
-            <p className={`text-xl font-heading font-extrabold ${s.profit !== undefined ? (s.profit >= 0 ? 'text-profit-positive' : 'text-profit-negative') : ''}`}>
+            <div className={`absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r ${s.accent}`} />
+            <p className="text-xs font-heading tracking-wider text-muted-foreground mb-1">{s.label}</p>
+            <p className={`text-xl font-heading font-bold ${s.profit !== undefined ? (s.profit >= 0 ? 'text-profit-positive' : 'text-profit-negative') : ''}`}>
               {s.value}
             </p>
           </motion.div>
@@ -80,27 +81,27 @@ export default function Dashboard() {
       </motion.div>
 
       {/* Chart */}
-      <motion.div variants={fadeUp} className="bg-card rounded-lg p-4">
-        <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-muted-foreground mb-4">{t('profitChart')}</h3>
+      <motion.div variants={fadeUp} className="rounded-xl glass p-5">
+        <h3 className="font-heading font-semibold text-sm tracking-wider text-muted-foreground mb-4">{t('profitChart')}</h3>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={chartData}>
-            <XAxis dataKey="month" tick={{ fill: 'hsl(200 20% 57%)', fontSize: 12, fontFamily: 'Syne' }} axisLine={false} tickLine={false} />
+            <XAxis dataKey="month" tick={{ fill: 'hsl(215 15% 55%)', fontSize: 12, fontFamily: 'Satoshi' }} axisLine={false} tickLine={false} />
             <YAxis hide />
-            <Bar dataKey="profit" radius={[6, 6, 0, 0]} animationDuration={800} animationEasing="ease-out">
+            <Bar dataKey="profit" radius={[8, 8, 0, 0]} animationDuration={800} animationEasing="ease-out">
               {chartData.map((_, i) => (
-                <Cell key={i} fill="hsl(180 52% 35%)" />
+                <Cell key={i} fill="hsl(170 60% 40%)" fillOpacity={0.8} />
               ))}
-              <LabelList dataKey="profit" position="top" formatter={(v: number) => v > 0 ? formatXOF(v) : ''} style={{ fill: 'hsl(180 52% 35%)', fontSize: 10, fontFamily: 'DM Sans', fontWeight: 700 }} />
+              <LabelList dataKey="profit" position="top" formatter={(v: number) => v > 0 ? formatXOF(v) : ''} style={{ fill: 'hsl(170 60% 40%)', fontSize: 10, fontFamily: 'Satoshi', fontWeight: 700 }} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </motion.div>
 
       {/* Recent orders */}
-      <motion.div variants={fadeUp} className="bg-card rounded-lg p-4">
+      <motion.div variants={fadeUp} className="rounded-xl glass p-5">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-muted-foreground">{t('recentOrders')}</h3>
-          <Link to="/orders" className="text-teal text-sm font-heading font-semibold hover:underline">{t('orders')} →</Link>
+          <h3 className="font-heading font-semibold text-sm tracking-wider text-muted-foreground">{t('recentOrders')}</h3>
+          <Link to="/orders" className="text-teal text-sm font-heading font-semibold hover:text-teal-light transition-colors">{t('orders')} →</Link>
         </div>
         {recent.length === 0 ? (
           <p className="text-muted-foreground text-sm">{t('noOrders')}</p>
@@ -109,10 +110,10 @@ export default function Dashboard() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-2 font-heading uppercase text-xs text-muted-foreground">{t('client')}</th>
-                  <th className="text-left py-2 font-heading uppercase text-xs text-muted-foreground">{t('transport')}</th>
-                  <th className="text-right py-2 font-heading uppercase text-xs text-muted-foreground">{t('profit')}</th>
-                  <th className="text-left py-2 font-heading uppercase text-xs text-muted-foreground">{t('status')}</th>
+                  <th className="text-left py-2 font-heading text-xs text-muted-foreground">{t('client')}</th>
+                  <th className="text-left py-2 font-heading text-xs text-muted-foreground">{t('transport')}</th>
+                  <th className="text-right py-2 font-heading text-xs text-muted-foreground">{t('profit')}</th>
+                  <th className="text-left py-2 font-heading text-xs text-muted-foreground">{t('status')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -122,10 +123,10 @@ export default function Dashboard() {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="border-b border-border/50 hover:bg-accent/50 transition-colors"
+                    className="border-b border-border/50 hover:bg-accent/30 transition-colors"
                   >
                     <td className="py-2.5">
-                      <Link to={`/orders/${o.id}`} className="text-foreground hover:text-teal font-medium">{o.client}</Link>
+                      <Link to={`/orders/${o.id}`} className="text-foreground hover:text-teal font-medium transition-colors">{o.client}</Link>
                     </td>
                     <td className="py-2.5"><TransportBadge transport={o.transport} /></td>
                     <td className={`py-2.5 text-right font-amount ${o.profit >= 0 ? 'text-profit-positive' : 'text-profit-negative'}`}>

@@ -66,32 +66,33 @@ export default function Settings() {
     reader.readAsText(file);
   }, [importJson, t]);
 
+  const inputClass = "w-full h-10 px-3 rounded-xl glass text-foreground text-sm focus:ring-2 focus:ring-teal/50 focus:outline-none transition-all";
+
   const SectionHeader = ({ label }: { label: string }) => (
-    <div className="bg-teal/10 border-l-4 border-teal px-4 py-2 rounded-r-lg mb-4 mt-6">
-      <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-teal">{label}</h3>
+    <div className="glass rounded-xl px-4 py-2.5 mb-4 mt-6 border-l-2 border-teal">
+      <h3 className="font-heading font-semibold text-sm tracking-wider text-teal">{label}</h3>
     </div>
   );
 
   return (
     <div className="p-4 md:p-6 max-w-lg mx-auto animate-fade-in">
-      <h2 className="text-xl font-heading font-bold uppercase tracking-wider mb-2">{t('settings')}</h2>
+      <h2 className="text-xl font-heading font-bold tracking-wider mb-2">{t('settings')}</h2>
 
       {/* Profile */}
       <SectionHeader label={t('profile')} />
       <div className="space-y-4">
         <div>
-          <label className="block text-xs font-heading uppercase text-muted-foreground mb-1">{t('changeName')}</label>
+          <label className="block text-xs font-heading text-muted-foreground mb-1">{t('changeName')}</label>
           <div className="flex gap-2">
-            <input value={name} onChange={e => setName(e.target.value)}
-              className="flex-1 h-10 px-3 rounded-lg bg-card border border-border text-card-foreground text-sm focus:border-teal focus:outline-none" />
-            <button onClick={handleNameSave} className="px-4 h-10 rounded-lg bg-teal text-primary-foreground text-sm font-heading font-bold">OK</button>
+            <input value={name} onChange={e => setName(e.target.value)} className={`flex-1 ${inputClass}`} />
+            <button onClick={handleNameSave} className="px-4 h-10 rounded-xl bg-teal text-primary-foreground text-sm font-heading font-semibold transition-colors hover:bg-teal-light">OK</button>
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-heading uppercase text-muted-foreground mb-1">{t('changePin')}</label>
+          <label className="block text-xs font-heading text-muted-foreground mb-1">{t('changePin')}</label>
           {pinMode === 'idle' ? (
-            <button onClick={() => setPinMode('old')} className="h-10 px-4 rounded-lg border border-border text-sm font-heading hover:border-teal transition-colors">
+            <button onClick={() => setPinMode('old')} className="h-10 px-4 rounded-xl glass text-sm font-heading hover:ring-2 hover:ring-teal/50 transition-all">
               {t('changePin')}
             </button>
           ) : (
@@ -110,11 +111,11 @@ export default function Settings() {
         </div>
 
         <div>
-          <label className="block text-xs font-heading uppercase text-muted-foreground mb-1">{t('changeReminder')}</label>
+          <label className="block text-xs font-heading text-muted-foreground mb-1">{t('changeReminder')}</label>
           <div className="flex gap-2">
             <input type="number" value={days} min={1} onChange={e => setDays(parseInt(e.target.value) || 1)}
-              className="w-24 h-10 px-3 rounded-lg bg-card border border-border text-card-foreground text-sm text-center focus:border-teal focus:outline-none" />
-            <button onClick={() => updateReminderDays(days)} className="px-4 h-10 rounded-lg bg-teal text-primary-foreground text-sm font-heading font-bold">OK</button>
+              className={`w-24 text-center ${inputClass}`} />
+            <button onClick={() => updateReminderDays(days)} className="px-4 h-10 rounded-xl bg-teal text-primary-foreground text-sm font-heading font-semibold transition-colors hover:bg-teal-light">OK</button>
           </div>
         </div>
       </div>
@@ -122,25 +123,25 @@ export default function Settings() {
       {/* Export / Import */}
       <SectionHeader label={t('exportData')} />
       <div className="space-y-3">
-        <button onClick={exportJson} className="w-full h-10 rounded-lg bg-card border border-border text-sm font-heading font-semibold hover:border-teal transition-colors">
+        <button onClick={exportJson} className="w-full h-10 rounded-xl glass text-sm font-heading font-semibold hover:ring-2 hover:ring-teal/50 transition-all">
           {t('exportJson')}
         </button>
       </div>
 
       <SectionHeader label={t('importData')} />
       <div className="space-y-3">
-        <button onClick={() => fileRef.current?.click()} className="w-full h-10 rounded-lg bg-card border border-border text-sm font-heading font-semibold hover:border-teal transition-colors">
+        <button onClick={() => fileRef.current?.click()} className="w-full h-10 rounded-xl glass text-sm font-heading font-semibold hover:ring-2 hover:ring-teal/50 transition-all">
           {t('importJson')}
         </button>
         <input ref={fileRef} type="file" accept=".json" className="hidden" onChange={handleImport} />
       </div>
 
       {/* Auto-save */}
-      <div className="mt-6 flex items-center justify-between p-4 bg-card rounded-lg border border-border">
+      <div className="mt-6 flex items-center justify-between p-4 rounded-xl glass">
         <span className="text-sm font-heading font-semibold">{t('autosave')}</span>
         <button
           onClick={() => setAutosave(!autosave)}
-          className={`w-12 h-6 rounded-full relative transition-colors ${autosave ? 'bg-teal' : 'bg-border'}`}
+          className={`w-12 h-6 rounded-full relative transition-colors ${autosave ? 'bg-teal' : 'bg-muted'}`}
         >
           <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-primary-foreground transition-transform ${autosave ? 'left-6' : 'left-0.5'}`} />
         </button>
@@ -150,11 +151,11 @@ export default function Settings() {
       <SectionHeader label={t('dangerZone')} />
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <button className="w-full h-12 rounded-lg border-2 border-danger text-danger font-heading font-bold uppercase tracking-wider hover:bg-danger hover:text-primary-foreground transition-colors">
+          <button className="w-full h-12 rounded-xl border border-danger text-danger font-heading font-semibold tracking-wider hover:bg-danger hover:text-primary-foreground transition-colors">
             {t('resetAll')}
           </button>
         </AlertDialogTrigger>
-        <AlertDialogContent>
+        <AlertDialogContent className="glass-strong rounded-xl">
           <AlertDialogHeader>
             <AlertDialogTitle>{t('resetAll')}</AlertDialogTitle>
             <AlertDialogDescription>{t('resetConfirm')}</AlertDialogDescription>

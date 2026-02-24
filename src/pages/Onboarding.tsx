@@ -37,9 +37,12 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative">
+      {/* Ambient glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-teal/5 blur-[120px] animate-glow pointer-events-none" />
+
       <div className="absolute top-4 right-4 flex gap-2">
-        <button onClick={toggleLang} className="text-xs font-heading font-bold uppercase border border-border rounded px-2 py-1 text-foreground/70 hover:text-foreground">
+        <button onClick={toggleLang} className="text-xs font-heading font-semibold border border-border rounded-md px-2 py-1 text-foreground/60 hover:text-foreground transition-colors">
           {lang === 'fr' ? 'EN' : 'FR'}
         </button>
         <button onClick={toggleTheme} className="text-lg">{theme === 'dark' ? '☀️' : '🌙'}</button>
@@ -50,7 +53,7 @@ export default function Onboarding() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-teal font-heading text-xs uppercase tracking-[0.3em] text-center mb-8"
+          className="text-teal font-heading text-xs tracking-[0.3em] text-center mb-8"
         >
           ✦ Import Tracker ✦
         </motion.h1>
@@ -70,7 +73,7 @@ export default function Onboarding() {
               <input
                 value={name}
                 onChange={e => setName(e.target.value)}
-                className="w-full h-12 px-4 rounded-lg bg-card border border-border text-card-foreground font-body text-lg focus:border-teal focus:outline-none"
+                className="w-full h-12 px-4 rounded-xl glass text-foreground font-body text-lg focus:ring-2 focus:ring-teal/50 focus:outline-none transition-all"
                 autoFocus
                 onKeyDown={e => e.key === 'Enter' && name.trim() && setStep(1)}
               />
@@ -79,7 +82,7 @@ export default function Onboarding() {
                 onClick={() => setStep(1)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full h-12 rounded-lg bg-teal text-primary-foreground font-heading font-bold uppercase tracking-wider disabled:opacity-40 hover:bg-teal-light transition-colors"
+                className="w-full h-12 rounded-xl bg-teal text-primary-foreground font-heading font-semibold tracking-wider disabled:opacity-40 hover:bg-teal-light transition-colors"
               >
                 {t('continue')}
               </motion.button>
@@ -131,14 +134,14 @@ export default function Onboarding() {
                 type="number"
                 value={days}
                 onChange={e => setDays(Math.max(1, parseInt(e.target.value) || 1))}
-                className="w-full h-12 px-4 rounded-lg bg-card border border-border text-card-foreground font-body text-lg text-center focus:border-teal focus:outline-none"
+                className="w-full h-12 px-4 rounded-xl glass text-foreground font-body text-lg text-center focus:ring-2 focus:ring-teal/50 focus:outline-none transition-all"
                 min={1}
               />
               <motion.button
                 onClick={() => completeOnboarding(name.trim(), pinConfirm, days)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full h-12 rounded-lg bg-teal text-primary-foreground font-heading font-bold uppercase tracking-wider hover:bg-teal-light transition-colors"
+                className="w-full h-12 rounded-xl bg-teal text-primary-foreground font-heading font-semibold tracking-wider hover:bg-teal-light transition-colors"
               >
                 {t('continue')}
               </motion.button>
@@ -150,7 +153,7 @@ export default function Onboarding() {
           {[0, 1, 2].map(i => (
             <motion.div
               key={i}
-              animate={{ scale: i === step ? 1.3 : 1, backgroundColor: i === step ? 'hsl(180 52% 35%)' : 'hsl(var(--border))' }}
+              animate={{ scale: i === step ? 1.3 : 1, backgroundColor: i === step ? 'hsl(170 60% 40%)' : 'hsl(var(--border))' }}
               transition={{ duration: 0.3 }}
               className="w-2.5 h-2.5 rounded-full"
             />

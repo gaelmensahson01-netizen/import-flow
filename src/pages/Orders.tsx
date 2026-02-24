@@ -33,8 +33,8 @@ export default function Orders() {
   return (
     <div className="p-4 md:p-6 space-y-4 animate-fade-in">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-xl font-heading font-bold uppercase tracking-wider">{t('orders')}</h2>
-        <Link to="/orders/new" className="px-4 py-2 bg-teal text-primary-foreground font-heading font-bold uppercase text-sm rounded-lg hover:bg-teal-light transition-colors">
+        <h2 className="text-xl font-heading font-bold tracking-wider">{t('orders')}</h2>
+        <Link to="/orders/new" className="px-4 py-2 bg-teal text-primary-foreground font-heading font-semibold text-sm rounded-xl hover:bg-teal-light transition-colors">
           + {t('newOrder')}
         </Link>
       </div>
@@ -47,21 +47,21 @@ export default function Orders() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder={t('search')}
-            className="w-full h-10 pl-9 pr-8 rounded-lg bg-card border border-border text-card-foreground text-sm focus:border-teal focus:outline-none"
+            className="w-full h-10 pl-9 pr-8 rounded-xl glass text-foreground text-sm focus:ring-2 focus:ring-teal/50 focus:outline-none transition-all"
           />
           {search && (
             <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">×</button>
           )}
         </div>
-        <select value={filterMonth} onChange={e => setFilterMonth(e.target.value)} className="h-10 px-3 rounded-lg bg-card border border-border text-card-foreground text-sm focus:border-teal focus:outline-none">
+        <select value={filterMonth} onChange={e => setFilterMonth(e.target.value)} className="h-10 px-3 rounded-xl glass text-foreground text-sm focus:ring-2 focus:ring-teal/50 focus:outline-none">
           <option value="">{t('month')}: {t('all')}</option>
           {months.map(m => <option key={m} value={m}>{m}</option>)}
         </select>
-        <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="h-10 px-3 rounded-lg bg-card border border-border text-card-foreground text-sm focus:border-teal focus:outline-none">
+        <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="h-10 px-3 rounded-xl glass text-foreground text-sm focus:ring-2 focus:ring-teal/50 focus:outline-none">
           <option value="">{t('status')}: {t('all')}</option>
           {['encours','arrive','recupere','livre'].map(s => <option key={s} value={s}>{t(s as any)}</option>)}
         </select>
-        <select value={filterTransport} onChange={e => setFilterTransport(e.target.value)} className="h-10 px-3 rounded-lg bg-card border border-border text-card-foreground text-sm focus:border-teal focus:outline-none">
+        <select value={filterTransport} onChange={e => setFilterTransport(e.target.value)} className="h-10 px-3 rounded-xl glass text-foreground text-sm focus:ring-2 focus:ring-teal/50 focus:outline-none">
           <option value="">{t('transport')}: {t('all')}</option>
           {['avion','bateau','mix'].map(s => <option key={s} value={s}>{t(s as any)}</option>)}
         </select>
@@ -73,12 +73,12 @@ export default function Orders() {
           {search ? `${t('noResults')} "${search}"` : t('noOrders')}
         </p>
       ) : (
-        <div className="overflow-x-auto bg-card rounded-lg">
+        <div className="overflow-x-auto rounded-xl glass">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border">
                 {['client','transport','realPrice','clientPrice','profit','status','dateOrder','actions'].map(col => (
-                  <th key={col} className="text-left py-3 px-3 font-heading uppercase text-xs text-muted-foreground whitespace-nowrap">
+                  <th key={col} className="text-left py-3 px-3 font-heading text-xs text-muted-foreground whitespace-nowrap">
                     {t(col as any)}
                   </th>
                 ))}
@@ -86,7 +86,7 @@ export default function Orders() {
             </thead>
             <tbody>
               {filtered.map(o => (
-                <tr key={o.id} className="border-b border-border/50 hover:bg-accent/50 transition-colors">
+                <tr key={o.id} className="border-b border-border/50 hover:bg-accent/30 transition-colors">
                   <td className="py-2.5 px-3 font-medium">{o.client}</td>
                   <td className="py-2.5 px-3"><TransportBadge transport={o.transport} /></td>
                   <td className="py-2.5 px-3 whitespace-nowrap">{formatXOF(o.realPrice)}</td>
@@ -98,13 +98,13 @@ export default function Orders() {
                   <td className="py-2.5 px-3 whitespace-nowrap text-muted-foreground">{o.dateOrder}</td>
                   <td className="py-2.5 px-3">
                     <div className="flex items-center gap-1.5">
-                      <Link to={`/orders/${o.id}`} className="hover:text-teal" title={t('view')}>👁</Link>
-                      <Link to={`/orders/${o.id}/edit`} className="hover:text-teal" title={t('edit')}>✏️</Link>
+                      <Link to={`/orders/${o.id}`} className="hover:text-teal transition-colors" title={t('view')}>👁</Link>
+                      <Link to={`/orders/${o.id}/edit`} className="hover:text-teal transition-colors" title={t('edit')}>✏️</Link>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <button className="hover:text-danger" title={t('delete')}>🗑</button>
+                          <button className="hover:text-danger transition-colors" title={t('delete')}>🗑</button>
                         </AlertDialogTrigger>
-                        <AlertDialogContent>
+                        <AlertDialogContent className="glass-strong rounded-xl">
                           <AlertDialogHeader>
                             <AlertDialogTitle>{t('confirmDelete')}</AlertDialogTitle>
                             <AlertDialogDescription>{t('confirmDeleteMsg')}</AlertDialogDescription>

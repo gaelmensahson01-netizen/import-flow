@@ -12,16 +12,16 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 h-14 bg-nav flex items-center px-4 gap-2 shadow-lg">
-      <Link to="/" className="font-heading text-xl font-extrabold text-teal tracking-wider mr-4">IT</Link>
+    <nav className="fixed top-0 left-0 right-0 z-40 h-14 glass-nav flex items-center px-4 gap-2">
+      <Link to="/" className="font-heading text-xl font-bold text-teal tracking-wider mr-4">IT</Link>
 
       <div className="hidden sm:flex items-center gap-1">
         {links.map(l => (
           <Link
             key={l.to}
             to={l.to}
-            className={`relative px-3 py-1.5 rounded-md text-sm font-heading font-semibold uppercase tracking-wide transition-colors ${
-              pathname === l.to ? 'bg-gold/20 text-gold' : 'text-nav-foreground/70 hover:text-nav-foreground'
+            className={`relative px-3 py-1.5 rounded-lg text-sm font-heading font-semibold tracking-wide transition-all ${
+              pathname === l.to ? 'glass text-gold' : 'text-nav-foreground/70 hover:text-nav-foreground hover:bg-nav-foreground/5'
             }`}
           >
             {l.label}
@@ -36,22 +36,22 @@ export default function Navbar() {
 
       <div className="flex-1" />
 
-      <button onClick={undo} disabled={!canUndo} className="text-nav-foreground/70 hover:text-nav-foreground disabled:opacity-30 text-lg" title="Undo">↩</button>
-      <button onClick={redo} disabled={!canRedo} className="text-nav-foreground/70 hover:text-nav-foreground disabled:opacity-30 text-lg" title="Redo">↪</button>
-      <button onClick={toggleTheme} className="text-nav-foreground/70 hover:text-nav-foreground text-lg ml-1">{theme === 'dark' ? '☀️' : '🌙'}</button>
-      <button onClick={toggleLang} className="text-nav-foreground/70 hover:text-nav-foreground text-xs font-heading font-bold uppercase border border-nav-foreground/20 rounded px-1.5 py-0.5 ml-1">
+      <button onClick={undo} disabled={!canUndo} className="text-nav-foreground/60 hover:text-nav-foreground disabled:opacity-20 text-lg transition-colors" title="Undo">↩</button>
+      <button onClick={redo} disabled={!canRedo} className="text-nav-foreground/60 hover:text-nav-foreground disabled:opacity-20 text-lg transition-colors" title="Redo">↪</button>
+      <button onClick={toggleTheme} className="text-nav-foreground/60 hover:text-nav-foreground text-lg ml-1 transition-colors">{theme === 'dark' ? '☀️' : '🌙'}</button>
+      <button onClick={toggleLang} className="text-nav-foreground/60 hover:text-nav-foreground text-xs font-heading font-semibold border border-nav-foreground/15 rounded-md px-2 py-0.5 ml-1 transition-colors hover:border-nav-foreground/30">
         {lang === 'fr' ? 'EN' : 'FR'}
       </button>
-      <span className="ml-2 px-2.5 py-1 rounded-full bg-teal/20 text-teal text-xs font-heading font-bold uppercase">{user}</span>
+      <span className="ml-2 px-3 py-1 rounded-full glass text-teal text-xs font-heading font-bold">{user}</span>
 
       {/* Mobile nav */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 bg-nav flex justify-around py-2 border-t border-border/20">
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 glass-nav flex justify-around py-2.5">
         {links.map(l => (
           <Link
             key={l.to}
             to={l.to}
-            className={`relative flex flex-col items-center text-xs font-heading font-semibold uppercase ${
-              pathname === l.to ? 'text-gold' : 'text-nav-foreground/60'
+            className={`relative flex flex-col items-center text-xs font-heading font-semibold ${
+              pathname === l.to ? 'text-gold' : 'text-nav-foreground/50'
             }`}
           >
             {l.label}
