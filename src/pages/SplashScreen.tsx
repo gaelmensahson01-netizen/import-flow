@@ -13,14 +13,20 @@ export default function SplashScreen() {
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden">
+      {/* Ambient glow */}
+      <div className="absolute inset-0 bg-background">
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-teal/5 blur-[120px] animate-glow" />
+        <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] rounded-full bg-gold/5 blur-[100px] animate-glow" style={{ animationDelay: '1.5s' }} />
+      </div>
+
       {/* Two panels */}
       <motion.div
-        className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-b from-background to-card"
+        className="absolute top-0 left-0 w-1/2 h-full bg-background"
         animate={opening ? { x: '-100%' } : { x: 0 }}
         transition={{ duration: 0.7, ease: [0.77, 0, 0.18, 1] }}
       />
       <motion.div
-        className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-b from-background to-card"
+        className="absolute top-0 right-0 w-1/2 h-full bg-background"
         animate={opening ? { x: '100%' } : { x: 0 }}
         transition={{ duration: 0.7, ease: [0.77, 0, 0.18, 1] }}
       />
@@ -32,7 +38,7 @@ export default function SplashScreen() {
         transition={{ duration: 0.5, ease: 'easeInOut' }}
       >
         <div className="absolute top-4 right-4 flex gap-2">
-          <button onClick={toggleLang} className="text-xs font-heading font-bold uppercase border border-border rounded px-2 py-1 text-foreground/70 hover:text-foreground">
+          <button onClick={toggleLang} className="text-xs font-heading font-semibold border border-border rounded-md px-2 py-1 text-foreground/60 hover:text-foreground transition-colors">
             {lang === 'fr' ? 'EN' : 'FR'}
           </button>
           <button onClick={toggleTheme} className="text-lg">{theme === 'dark' ? '☀️' : '🌙'}</button>
@@ -42,7 +48,7 @@ export default function SplashScreen() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
-          className="text-teal font-heading text-xs uppercase tracking-[0.3em] mb-6"
+          className="text-teal font-heading text-xs tracking-[0.3em] mb-6"
         >
           {t('tagline')}
         </motion.p>
@@ -50,7 +56,7 @@ export default function SplashScreen() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 0.6 }}
-          className="text-3xl md:text-5xl font-heading font-extrabold text-center mb-2"
+          className="text-3xl md:text-5xl font-heading font-bold text-center mb-2"
         >
           {t('splashWelcome')}
         </motion.h1>
@@ -58,7 +64,7 @@ export default function SplashScreen() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-3xl md:text-5xl font-heading font-extrabold text-center mb-6"
+          className="text-3xl md:text-5xl font-heading font-bold text-center mb-6"
         >
           Import Tracker <span className="text-teal">{user}</span>
         </motion.h2>
@@ -66,7 +72,7 @@ export default function SplashScreen() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.65, duration: 0.6 }}
-          className="text-muted-foreground text-lg mb-10"
+          className="text-muted-foreground text-lg mb-10 font-body"
         >
           {t('splashSubtitle')}
         </motion.p>
@@ -75,9 +81,9 @@ export default function SplashScreen() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.8, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={{ scale: 1.06, backgroundColor: 'hsl(180 52% 35%)', color: '#fff' }}
+          whileHover={{ scale: 1.06, backgroundColor: 'hsl(170 60% 40%)', color: '#fff' }}
           whileTap={{ scale: 0.95 }}
-          className="px-10 py-3 border-2 border-teal text-teal font-heading font-bold uppercase tracking-widest rounded-lg transition-all duration-300"
+          className="px-10 py-3 border border-teal text-teal font-heading font-semibold tracking-widest rounded-xl glass transition-all duration-300"
         >
           {t('enter')}
         </motion.button>

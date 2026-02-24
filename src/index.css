@@ -4,45 +4,49 @@
 
 @layer base {
   :root {
-    /* Brand — invariant across modes */
-    --teal: 180 52% 35%;
-    --teal-light: 170 52% 48%;
-    --gold: 45 52% 54%;
-    --sea-blue: 212 80% 42%;
-    --nav: 203 35% 16%;
+    /* Brand */
+    --teal: 170 60% 40%;
+    --teal-light: 170 55% 50%;
+    --gold: 42 65% 58%;
+    --sea-blue: 215 75% 48%;
+    --nav: 210 30% 10%;
     --nav-foreground: 210 20% 93%;
 
     /* Status */
-    --status-pending: 51 100% 50%;
-    --status-arrived: 205 100% 50%;
-    --status-picked: 152 100% 45%;
-    --status-delivered: 123 46% 34%;
+    --status-pending: 48 100% 54%;
+    --status-arrived: 210 100% 55%;
+    --status-picked: 155 80% 45%;
+    --status-delivered: 145 50% 36%;
 
     /* Feedback */
-    --danger: 1 76% 55%;
-    --success: 152 100% 45%;
+    --danger: 0 72% 55%;
+    --success: 155 80% 45%;
 
-    /* Light mode surfaces */
-    --background: 60 6% 95%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 180 52% 35%;
+    /* Light mode */
+    --background: 220 15% 95%;
+    --foreground: 220 20% 12%;
+    --card: 0 0% 100% / 0.7;
+    --card-foreground: 220 20% 12%;
+    --popover: 0 0% 100% / 0.85;
+    --popover-foreground: 220 20% 12%;
+    --primary: 170 60% 40%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 60 4% 90%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 210 14% 92%;
-    --muted-foreground: 210 15% 41%;
-    --accent: 60 4% 90%;
-    --accent-foreground: 0 0% 10%;
-    --destructive: 1 76% 55%;
+    --secondary: 220 12% 90%;
+    --secondary-foreground: 220 20% 12%;
+    --muted: 220 14% 90%;
+    --muted-foreground: 220 10% 46%;
+    --accent: 220 12% 92%;
+    --accent-foreground: 220 20% 12%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 210 18% 85%;
-    --input: 210 18% 85%;
-    --ring: 180 52% 35%;
-    --radius: 0.625rem;
+    --border: 220 15% 85% / 0.6;
+    --input: 220 15% 85% / 0.6;
+    --ring: 170 60% 40%;
+    --radius: 0.75rem;
+
+    --glass-bg: 0 0% 100% / 0.55;
+    --glass-border: 0 0% 100% / 0.3;
+    --glass-blur: 16px;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -55,25 +59,29 @@
   }
 
   .dark {
-    --background: 0 0% 7%;
+    --background: 225 20% 7%;
     --foreground: 210 20% 93%;
-    --card: 203 35% 16%;
+    --card: 220 25% 12% / 0.6;
     --card-foreground: 210 20% 93%;
-    --popover: 203 35% 16%;
+    --popover: 220 25% 12% / 0.8;
     --popover-foreground: 210 20% 93%;
-    --primary: 180 52% 35%;
+    --primary: 170 60% 40%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 203 30% 20%;
+    --secondary: 220 20% 16%;
     --secondary-foreground: 210 20% 93%;
-    --muted: 203 26% 22%;
-    --muted-foreground: 200 20% 57%;
-    --accent: 203 30% 20%;
+    --muted: 220 18% 18%;
+    --muted-foreground: 215 15% 55%;
+    --accent: 220 20% 16%;
     --accent-foreground: 210 20% 93%;
-    --destructive: 1 76% 55%;
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
-    --border: 203 26% 22%;
-    --input: 203 26% 22%;
-    --ring: 180 52% 35%;
+    --border: 220 15% 20% / 0.6;
+    --input: 220 15% 20% / 0.6;
+    --ring: 170 60% 40%;
+
+    --glass-bg: 220 25% 12% / 0.45;
+    --glass-border: 220 20% 25% / 0.4;
+    --glass-blur: 20px;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -94,7 +102,7 @@
     @apply bg-background text-foreground font-body antialiased;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Clash Display', sans-serif;
   }
 }
 
@@ -108,6 +116,26 @@
   }
   .text-profit-negative {
     color: hsl(var(--danger));
+  }
+
+  /* Glassmorphism utilities */
+  .glass {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid hsl(var(--glass-border));
+  }
+  .glass-strong {
+    background: hsl(var(--glass-bg));
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid hsl(var(--glass-border));
+  }
+  .glass-nav {
+    background: hsl(var(--nav) / 0.85);
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border-bottom: 1px solid hsl(var(--glass-border));
   }
 }
 

@@ -17,8 +17,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["Syne", "sans-serif"],
-        body: ['"DM Sans"', "sans-serif"],
+        heading: ['"Clash Display"', "sans-serif"],
+        body: ["Satoshi", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -105,12 +105,17 @@ export default {
           "0%": { opacity: "0", transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
+        "glow": {
+          "0%, 100%": { opacity: "0.4" },
+          "50%": { opacity: "0.8" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.4s ease-out",
         "scale-in": "scale-in 0.3s ease-out",
+        "glow": "glow 3s ease-in-out infinite",
       },
     },
   },

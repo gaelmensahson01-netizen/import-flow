@@ -33,25 +33,25 @@ export default function OrderDetail() {
 
   return (
     <div className="p-4 md:p-6 max-w-2xl mx-auto animate-fade-in">
-      <button onClick={() => navigate(-1)} className="text-sm text-muted-foreground hover:text-foreground font-heading mb-4">{t('back')}</button>
-      <h2 className="text-xl font-heading font-bold uppercase tracking-wider mb-6">{t('orderDetail')}</h2>
+      <button onClick={() => navigate(-1)} className="text-sm text-muted-foreground hover:text-foreground font-heading mb-4 transition-colors">{t('back')}</button>
+      <h2 className="text-xl font-heading font-bold tracking-wider mb-6">{t('orderDetail')}</h2>
 
       {/* Detail table */}
-      <div className="bg-card rounded-lg overflow-hidden border border-border mb-6">
-        <div className="bg-nav px-4 py-3">
-          <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-nav-foreground">{order.client}</h3>
+      <div className="rounded-xl overflow-hidden glass mb-6">
+        <div className="glass-nav px-4 py-3">
+          <h3 className="font-heading font-semibold text-sm tracking-wider text-nav-foreground">{order.client}</h3>
         </div>
-        <div className="divide-y divide-border">
+        <div className="divide-y divide-border/50">
           {rows.map(([label, val]) => (
             <div key={label as string} className="flex items-center justify-between px-4 py-3">
-              <span className="text-xs font-heading uppercase text-muted-foreground">{label}</span>
+              <span className="text-xs font-heading text-muted-foreground">{label}</span>
               <span className="text-sm font-medium">{val}</span>
             </div>
           ))}
         </div>
         {/* Total benefit */}
-        <div className="bg-nav px-4 py-4 flex items-center justify-between">
-          <span className="font-heading font-bold uppercase text-sm tracking-wider text-gold">{t('totalBenefit')}</span>
+        <div className="glass-nav px-4 py-4 flex items-center justify-between">
+          <span className="font-heading font-semibold text-sm tracking-wider text-gold">{t('totalBenefit')}</span>
           <span className={`font-amount text-lg ${order.profit >= 0 ? 'text-profit-positive' : 'text-profit-negative'}`}>
             {formatXOF(order.profit)}
           </span>
@@ -61,10 +61,10 @@ export default function OrderDetail() {
       {/* Photos */}
       {order.photos.length > 0 && (
         <div className="mb-6">
-          <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-muted-foreground mb-3">{t('photos')}</h3>
+          <h3 className="font-heading font-semibold text-sm tracking-wider text-muted-foreground mb-3">{t('photos')}</h3>
           <div className="flex flex-wrap gap-3">
             {order.photos.map((p, i) => (
-              <button key={i} onClick={() => setLightbox(p)} className="w-24 h-24 rounded-lg overflow-hidden border border-border hover:border-teal transition-colors">
+              <button key={i} onClick={() => setLightbox(p)} className="w-24 h-24 rounded-xl overflow-hidden glass hover:ring-2 hover:ring-teal/50 transition-all">
                 <img src={p} alt="" className="w-full h-full object-cover" />
               </button>
             ))}
@@ -74,20 +74,20 @@ export default function OrderDetail() {
 
       {/* Lightbox */}
       {lightbox && (
-        <div className="fixed inset-0 z-50 bg-background/90 flex items-center justify-center p-6" onClick={() => setLightbox(null)}>
-          <img src={lightbox} alt="" className="max-w-full max-h-full rounded-lg" />
+        <div className="fixed inset-0 z-50 bg-background/90 backdrop-blur-md flex items-center justify-center p-6" onClick={() => setLightbox(null)}>
+          <img src={lightbox} alt="" className="max-w-full max-h-full rounded-xl" />
         </div>
       )}
 
       {/* Review */}
       {(order.rating > 0 || order.review || order.suggestions) && (
-        <div className="bg-card rounded-lg p-4 border border-border mb-6">
-          <h3 className="font-heading font-bold uppercase text-sm tracking-wider text-muted-foreground mb-3">{t('review')}</h3>
+        <div className="rounded-xl glass p-4 mb-6">
+          <h3 className="font-heading font-semibold text-sm tracking-wider text-muted-foreground mb-3">{t('review')}</h3>
           {order.rating > 0 && <StarRating value={order.rating} readonly />}
           {order.review && <p className="text-sm mt-2">{order.review}</p>}
           {order.suggestions && (
-            <div className="mt-3 pt-3 border-t border-border">
-              <span className="text-xs font-heading uppercase text-muted-foreground">{t('suggestions')}</span>
+            <div className="mt-3 pt-3 border-t border-border/50">
+              <span className="text-xs font-heading text-muted-foreground">{t('suggestions')}</span>
               <p className="text-sm mt-1">{order.suggestions}</p>
             </div>
           )}
@@ -96,10 +96,10 @@ export default function OrderDetail() {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <Link to={`/orders/${order.id}/edit`} className="flex-1 h-12 rounded-lg bg-teal text-primary-foreground font-heading font-bold uppercase tracking-wider flex items-center justify-center hover:bg-teal-light transition-colors">
+        <Link to={`/orders/${order.id}/edit`} className="flex-1 h-12 rounded-xl bg-teal text-primary-foreground font-heading font-semibold tracking-wider flex items-center justify-center hover:bg-teal-light transition-colors">
           ✏️ {t('edit')}
         </Link>
-        <button onClick={() => navigate(-1)} className="px-6 h-12 rounded-lg border border-border text-muted-foreground font-heading font-bold uppercase tracking-wider hover:text-foreground transition-colors">
+        <button onClick={() => navigate(-1)} className="px-6 h-12 rounded-xl glass text-muted-foreground font-heading font-semibold tracking-wider hover:text-foreground transition-colors">
           {t('back')}
         </button>
       </div>

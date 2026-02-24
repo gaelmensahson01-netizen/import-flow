@@ -38,7 +38,7 @@ export default function PinInput({ onComplete, error }: Props) {
           value={v}
           onChange={e => handleChange(i, e.target.value)}
           onKeyDown={e => handleKeyDown(i, e)}
-          className="w-14 h-14 text-center text-2xl font-heading font-bold rounded-lg bg-card border-2 border-border text-card-foreground focus:border-teal focus:outline-none transition-colors"
+          className="w-14 h-14 text-center text-2xl font-heading font-bold rounded-xl glass text-foreground focus:ring-2 focus:ring-teal/50 focus:outline-none transition-all"
           autoFocus={i === 0}
         />
       ))}
