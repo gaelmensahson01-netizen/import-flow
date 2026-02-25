@@ -94,6 +94,22 @@ export default function OrderDetail() {
         </div>
       )}
 
+      {/* WhatsApp review request */}
+      {order.phone && (
+        <div className="mb-6">
+          <a
+            href={`https://wa.me/${order.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+              `Bonjour ${order.client}, Merci pour votre commande. Pourriez-vous me donner votre avis et une note de 1 à 5 ⭐ ainsi que d'éventuelles suggestions pour améliorer la qualité de service ? Merci pour votre confiance !`
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full h-12 rounded-xl bg-[hsl(142,70%,45%)] text-primary-foreground font-heading font-semibold tracking-wider hover:bg-[hsl(142,70%,40%)] transition-colors"
+          >
+            💬 {t('askReview')}
+          </a>
+        </div>
+      )}
+
       {/* Actions */}
       <div className="flex gap-3">
         <Link to={`/orders/${order.id}/edit`} className="flex-1 h-12 rounded-xl bg-teal text-primary-foreground font-heading font-semibold tracking-wider flex items-center justify-center hover:bg-teal-light transition-colors">
