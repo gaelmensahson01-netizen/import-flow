@@ -13,14 +13,14 @@ export default function OrderForm() {
   const isEdit = !!existing;
 
   const [form, setForm] = useState<Omit<Order, 'id' | 'createdAt'>>(() => existing ? {
-    client: existing.client, transport: existing.transport,
+    client: existing.client, phone: existing.phone, transport: existing.transport,
     realPrice: existing.realPrice, clientPrice: existing.clientPrice, profit: existing.profit,
     dateOrder: existing.dateOrder, dateArrival: existing.dateArrival,
     datePickup: existing.datePickup, dateDelivery: existing.dateDelivery,
     status: existing.status, photos: existing.photos,
     rating: existing.rating, review: existing.review, suggestions: existing.suggestions,
   } : {
-    client: '', transport: 'avion', realPrice: 0, clientPrice: 0, profit: 0,
+    client: '', phone: '', transport: 'avion', realPrice: 0, clientPrice: 0, profit: 0,
     dateOrder: new Date().toISOString().split('T')[0], dateArrival: '', datePickup: '', dateDelivery: '',
     status: 'encours', photos: [], rating: 0, review: '', suggestions: '',
   });
@@ -94,6 +94,10 @@ export default function OrderForm() {
             <div>
               <label className="block text-xs font-heading text-muted-foreground mb-1">{t('client')}</label>
               <input value={form.client} onChange={e => set('client', e.target.value)} required className={inputClass} />
+            </div>
+            <div>
+              <label className="block text-xs font-heading text-muted-foreground mb-1">{t('phone')}</label>
+              <input value={form.phone} onChange={e => set('phone', e.target.value)} placeholder="+221 7X XXX XX XX" className={inputClass} />
             </div>
             <div>
               <label className="block text-xs font-heading text-muted-foreground mb-1">{t('transport')}</label>

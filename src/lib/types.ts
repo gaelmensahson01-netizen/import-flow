@@ -1,6 +1,7 @@
 export interface Order {
   id: string;
   client: string;
+  phone: string;
   transport: 'avion' | 'bateau' | 'mix';
   realPrice: number;
   clientPrice: number;
