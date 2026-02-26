@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { AppProvider, useApp } from "@/context/AppContext";
 import Navbar from "@/components/Navbar";
 import AnimatedPage from "@/components/AnimatedPage";
+import AquaBackground from "@/components/AquaBackground";
 import Onboarding from "@/pages/Onboarding";
 import PinScreen from "@/pages/PinScreen";
 import SplashScreen from "@/pages/SplashScreen";
@@ -90,6 +91,7 @@ function AppContent() {
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <AquaBackground />
       <Toaster />
       <Sonner />
       <BrowserRouter>
